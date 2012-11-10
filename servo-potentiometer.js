@@ -16,9 +16,9 @@ board.on("ready", function() {
   });
 
   potentiometer
-    .scale([0,180])
-    .on("change", function (err, value) {
-      servo.move( this.value );
+    .scale([0, 180])
+    .on("change", function(err, value) {
+      servo.move(this.value);
     });
 
   // Inject the `servo` hardware into
