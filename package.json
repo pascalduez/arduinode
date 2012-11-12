@@ -17,7 +17,7 @@
   "licenses": [
     {
       "type": "UNLICENSE",
-      "url": "https://github.com/rwldrn/johnny-five/blob/master/UNLICENSE"
+      "url": "https://github.com/pascalduez/arduinode/blob/master/UNLICENSE"
     }
   ],
   "main": "",
@@ -28,13 +28,15 @@
     "test": ""
   },
   "dependencies": {
-    "grunt": ">=0.3.17",
+    "johnny-five": ">=0.5.14",
     "firmata": ">=0.2.4"
   },
   "devDependencies": {
-    "grunt": ">=0.3.17",
+    "johnny-five": ">=0.5.14",
     "firmata": ">=0.2.4",
-    "jshint": ">=0.9.1"
+    "grunt": ">=0.3.17",
+    "jshint": ">=0.9.1",
+    "imagemagick": ">=0.1.3"
   },
   "keywords": []
 }
