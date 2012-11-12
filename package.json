@@ -1,0 +1,40 @@
+{
+  "name": "arduinode",
+  "description": "Arduino + Node.js homework drafts.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/pascalduez/arduinode",
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pascalduez/arduinode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pascalduez/arduinode/issues"
+  },
+  "licenses": [
+    {
+      "type": "UNLICENSE",
+      "url": "https://github.com/rwldrn/johnny-five/blob/master/UNLICENSE"
+    }
+  ],
+  "main": "",
+  "engines": {
+    "node": ">=0.8.14"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "dependencies": {
+    "grunt": ">=0.3.17",
+    "firmata": ">=0.2.4"
+  },
+  "devDependencies": {
+    "grunt": ">=0.3.17",
+    "firmata": ">=0.2.4",
+    "jshint": ">=0.9.1"
+  },
+  "keywords": []
+}
