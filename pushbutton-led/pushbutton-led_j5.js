@@ -25,12 +25,11 @@ board.on("ready", function() {
     led.off();
   });
 
-  // Inject the `button` and `led hardware into
+  // Inject the `button` hardware into
   // the Repl instance's context;
   // allows direct command line access
   board.repl.inject({
-    button: button,
-    led: led
+    button: button
   });
 
 });
