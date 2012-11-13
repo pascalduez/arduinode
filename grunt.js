@@ -1,8 +1,5 @@
 module.exports = function(grunt) {
 
-  var file = grunt.file,
-      im = require('imagemagick');
-
   // Project configuration.
   grunt.initConfig({
     pkg: '<json:package.json>',
@@ -42,24 +39,40 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', 'lint');
 
-  // Png's resizing.
+  // Fzz's png resizing.
   grunt.registerMultiTask('resize', 'Smaller fritzing png exports.', function() {
-
-    var files = grunt.file.expandFiles(this.file.src);
+    var imgck = require('imagemagick'),
+        files = grunt.file.expandFiles(this.file.src),
+        done = this.async();
 
     files.forEach(function(file) {
-      im.resize({
-        srcPath: file,
-        dstPath: file,
-        quality: 0.8,
-        width: 1200
-      }, function(err, stdout, stderr) {
+
+      imgck.identify(file, function(err, features) {
+        if (err) {
+          grunt.log.error(err);
+          done(false);
+        }
+        if (features.width <= 1200) {
+          done();
+          return;
+        }
+        imgck.resize({
+          srcPath: file,
+          dstPath: file,
+          quality: 0.8,
+          width: 1200
+        }, function(err, stdout, stderr) {
           if (err) {
-            throw err;
+            grunt.log.error(err);
+            done(false);
           }
-          console.log('stdout:', stdout);
-          console.log('stderr:', stderr);
+          grunt.log.writeln('stdout:', stdout);
+          grunt.log.writeln('stderr:', stderr);
+          done();
+        });
+
       });
+
     });
 
   });
