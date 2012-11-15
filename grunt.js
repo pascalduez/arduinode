@@ -73,7 +73,9 @@ module.exports = function(grunt) {
         }
       });
 
-      ( i === files.length ) && done();
+      if ( i === files.length ) {
+        done();
+      }
     });
 
   });
