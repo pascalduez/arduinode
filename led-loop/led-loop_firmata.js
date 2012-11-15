@@ -1,33 +1,32 @@
-var Board = require("firmata").Board
-  , tty = "/dev/tty.usbmodemfd121"
-  , leds
-  , board
-  ;
+var Board = require("firmata").Board,
+    tty = "/dev/tty.usbmodemfd121",
+    leds, board, fw;
 
-leds = [7, 6, 5, 4, 3, 2];
-
-board = new Board(tty, function(err) {
-  if (err) {
-    console.log(err);
+board = new Board( tty, function( err ) {
+  if ( err ) {
+    console.log( err );
     return;
   }
 
+  fw = board.firmware;
   console.log("connected");
-  console.log("Firmware: " + board.firmware.name + "-" + board.firmware.version.major + "." + board.firmware.version.minor);
+  console.log("Firmware: " + fw.name + "-" + fw.version.major + "." + fw.version.minor);
+
+  leds = [ 7, 6, 5, 4, 3, 2 ];
 
   leds.forEach(function( led ) {
-    board.pinMode(led, board.MODES.OUTPUT);
+    board.pinMode( led, board.MODES.OUTPUT );
   });
 
-  (function ledLoop( i ) {
+  (function loop( i ) {
     board.digitalWrite( leds[ i ], board.HIGH );
     setTimeout(function() {
       board.digitalWrite( leds[ i ], board.LOW );
-      if (++i === leds.length) {
+      if ( ++i === leds.length ) {
         leds.reverse();
         i = 1;
       }
-      ledLoop( i );
+      loop( i );
     }, 100);
   }( 0 ));
 

@@ -2,32 +2,24 @@ var five = require("johnny-five"),
     board, leds;
 
 board = new five.Board();
-
-leds = [7, 6, 5, 4, 3, 2];
+leds = [];
 
 board.on("ready", function() {
 
-  leds.forEach(function( led ) {
-    board.pinMode( led, 1 );
+  [ 7, 6, 5, 4, 3, 2 ].forEach(function( pin, i ) {
+    leds[ i ] = new five.Led( pin );
   });
 
-  //@todo: needs work
-
-  this.loop( 500, function() {
-
-    leds.forEach(function( led, i ) {
-
-      board.wait( i * 100, function() {
-        board.digitalWrite( led, 1 );
-        board.wait( 100, function() {
-          board.digitalWrite( led, 0 );
-        });
-      });
-
+  (function loop( i ) {
+    leds[ i ].on();
+    board.wait( 100, function() {
+      leds[ i ].off();
+      if ( ++i === leds.length ) {
+        leds.reverse();
+        i = 1;
+      }
+      loop( i );
     });
-
-    leds.reverse();
-
-  });
+  }( 0 ));
 
 });
