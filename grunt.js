@@ -32,7 +32,7 @@ module.exports = function(grunt) {
       }
     },
     resize: {
-      src: ["**/*.png", "**/*.jpg"]
+      src: ["**/*.png"]
     }
   });
 
