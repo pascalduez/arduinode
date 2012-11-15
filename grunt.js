@@ -2,13 +2,13 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    pkg: '<json:package.json>',
+    pkg: "<json:package.json>",
     lint: {
-      files: ['grunt.js', '**/*.js']
+      files: ["grunt.js", "**/*.js"]
     },
     watch: {
-      files: '<config:lint.files>',
-      tasks: 'default'
+      files: "<config:lint.files>",
+      tasks: "default"
     },
     jshint: {
       options: {
@@ -32,47 +32,48 @@ module.exports = function(grunt) {
       }
     },
     resize: {
-      src: ['**/*.png']
+      src: ["**/*.png", "**/*.jpg"]
     }
   });
 
-  // Default task.
-  grunt.registerTask('default', 'lint');
+  var file = grunt.file,
+      log  = grunt.log;
 
-  // Fzz's png resizing.
-  grunt.registerMultiTask('resize', 'Smaller fritzing png exports.', function() {
-    var imgck = require('imagemagick'),
-        files = grunt.file.expandFiles(this.file.src),
+  // Default task.
+  grunt.registerTask("default", "lint");
+
+  // Fzz"s png resizing.
+  grunt.registerMultiTask("resize", "Smaller fritzing png exports.", function() {
+    var imgck = require("imagemagick"),
+        files = file.expandFiles( this.file.src ),
         done = this.async();
 
-    files.forEach(function(file) {
+    files.forEach(function( file, i ) {
 
-      imgck.identify(file, function(err, features) {
-        if (err) {
-          grunt.log.error(err);
-          done(false);
+      imgck.identify([ "-format", "%w", file ], function( err, output ) {
+        if ( err ) {
+          log.error( err );
+          done( false );
         }
-        if (features.width <= 1200) {
-          done();
-          return;
-        }
-        imgck.resize({
-          srcPath: file,
-          dstPath: file,
-          quality: 0.8,
-          width: 1200
-        }, function(err, stdout, stderr) {
-          if (err) {
-            grunt.log.error(err);
-            done(false);
-          }
-          grunt.log.writeln('stdout:', stdout);
-          grunt.log.writeln('stderr:', stderr);
-          done();
-        });
 
+        if ( output > 1200 ) {
+          imgck.resize({
+            srcPath : file,
+            dstPath : file,
+            quality : 0.8,
+            width   : 1200
+          }, function( err, stdout, stderr ) {
+            if ( err ) {
+              log.error( err );
+              done( false );
+            }
+            log.writeln( "stdout:", stdout );
+            log.writeln( "stderr:", stderr );
+          });
+        }
       });
 
+      ( i === files.length ) && done();
     });
 
   });
