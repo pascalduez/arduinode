@@ -1,3 +1,3 @@
 
-Arduino + node.js homework.
+Arduino + node.js homework.  
 A set of examples using node ( johnny-five, firmata ).
