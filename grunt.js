@@ -24,12 +24,14 @@ module.exports = function(grunt) {
         eqnull: true,
         node: true,
         strict: false,
-        es5: true,
-        laxcomma: true
+        es5: true
       },
       globals: {
         exports: true
       }
+    },
+    test: {
+      files: ["test/tools.js"]
     },
     resize: {
       src: ["**/*.png"]
@@ -42,7 +44,7 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask("default", "lint");
 
-  // Fzz"s png resizing.
+  // Fzz's png resizing.
   grunt.registerMultiTask("resize", "Smaller fritzing png exports.", function() {
     var imgck = require("imagemagick"),
         files = file.expandFiles( this.file.src ),
